@@ -66,5 +66,27 @@ class TestDfs(unittest.TestCase):
         self.assertEqual(self.graph.dfs("E"), ["E", "D", "C", "B", "A"])
 
 
+class TestBfs(unittest.TestCase):
+    def setUp(self):
+        self.graph = Graph()
+        self.graph.add_vertex("A")
+        self.graph.add_vertex("B")
+        self.graph.add_vertex("C")
+        self.graph.add_vertex("D")
+        self.graph.add_vertex("E")
+        self.graph.add_edge("A", "B")
+        self.graph.add_edge("B", "C")
+        self.graph.add_edge("C", "D")
+        self.graph.add_edge("D", "E")
+        self.graph.add_edge("E", "A")
+
+    def test_bfs(self):
+        self.assertEqual(self.graph.bfs("A"), ["A", "B", "E", "C", "D"])
+        self.assertEqual(self.graph.bfs("B"), ["B", "A", "C", "E", "D"])
+        self.assertEqual(self.graph.bfs("C"), ["C", "B", "D", "A", "E"])
+        self.assertEqual(self.graph.bfs("D"), ["D", "C", "E", "B", "A"])
+        self.assertEqual(self.graph.bfs("E"), ["E", "D", "A", "C", "B"])
+
+
 if __name__ == "__main__":
     unittest.main()
