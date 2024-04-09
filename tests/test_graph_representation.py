@@ -44,5 +44,27 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(self.graph.get_adjacency_list(), expected_adjacency_list)
 
 
+class TestDfs(unittest.TestCase):
+    def setUp(self):
+        self.graph = Graph()
+        self.graph.add_vertex("A")
+        self.graph.add_vertex("B")
+        self.graph.add_vertex("C")
+        self.graph.add_vertex("D")
+        self.graph.add_vertex("E")
+        self.graph.add_edge("A", "B")
+        self.graph.add_edge("B", "C")
+        self.graph.add_edge("C", "D")
+        self.graph.add_edge("D", "E")
+        self.graph.add_edge("E", "A")
+
+    def test_dfs(self):
+        self.assertEqual(self.graph.dfs("A"), ["A", "B", "C", "D", "E"])
+        self.assertEqual(self.graph.dfs("B"), ["B", "A", "E", "D", "C"])
+        self.assertEqual(self.graph.dfs("C"), ["C", "B", "A", "E", "D"])
+        self.assertEqual(self.graph.dfs("D"), ["D", "C", "B", "A", "E"])
+        self.assertEqual(self.graph.dfs("E"), ["E", "D", "C", "B", "A"])
+
+
 if __name__ == "__main__":
     unittest.main()

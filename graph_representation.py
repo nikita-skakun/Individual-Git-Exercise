@@ -14,7 +14,7 @@ class Graph:
         Adds a vertex to the graph.
 
         Args:
-            vertex (hashable): The vertex to be added.
+            vertex: The vertex to be added.
         """
         if vertex not in self.adjacency_list:
             self.adjacency_list[vertex] = []
@@ -24,8 +24,8 @@ class Graph:
         Adds an edge between two vertices in the graph.
 
         Args:
-            vertex1 (hashable): The first vertex.
-            vertex2 (hashable): The second vertex.
+            vertex1: The first vertex.
+            vertex2: The second vertex.
 
         Returns:
             bool: True if the edge was added successfully, False otherwise.
@@ -42,8 +42,8 @@ class Graph:
         Removes an edge between two vertices in the graph.
 
         Args:
-            vertex1 (hashable): The first vertex.
-            vertex2 (hashable): The second vertex.
+            vertex1: The first vertex.
+            vertex2: The second vertex.
 
         Returns:
             bool: True if the edge was removed successfully, False otherwise.
@@ -62,14 +62,14 @@ class Graph:
         Removes a vertex from the graph.
 
         Args:
-            vertex (hashable): The vertex to be removed.
+            vertex: The vertex to be removed.
 
         Returns:
             bool: True if the vertex was removed successfully, False otherwise.
         """
         if vertex in self.adjacency_list:
-            for neighbor in self.adjacency_list[vertex]:
-                self.adjacency_list[neighbor].remove(vertex)
+            for neighbour in self.adjacency_list[vertex]:
+                self.adjacency_list[neighbour].remove(vertex)
             del self.adjacency_list[vertex]
             return True
         else:
@@ -84,6 +84,27 @@ class Graph:
         """
         return self.adjacency_list
 
+    def dfs(self, start_vertex):
+        """
+        Performs depth-first search (DFS) traversal starting from the specified vertex.
+
+        Args:
+            start_vertex: The starting vertex for DFS traversal.
+
+        Returns:
+            list: A list of visited vertices in the order they were visited.
+        """
+        visited = []  # List to keep track of visited vertices
+
+        def dfs_recursive(vertex):
+            visited.append(vertex)  # Add the visited vertex to the list
+            for neighbour in self.adjacency_list[vertex]:
+                if neighbour not in visited:
+                    dfs_recursive(neighbour)  # Recursively visit neighbouring vertices
+
+        dfs_recursive(start_vertex)  # Start DFS traversal from the start vertex
+        return visited
+
 
 # Example usage:
 if __name__ == "__main__":
@@ -91,9 +112,15 @@ if __name__ == "__main__":
     graph.add_vertex("A")
     graph.add_vertex("B")
     graph.add_vertex("C")
-    assert graph.add_edge("A", "B") == True
+    graph.add_vertex("D")
+    graph.add_vertex("E")
     assert graph.add_edge("B", "C") == True
-    assert graph.add_edge("A", "C") == True
+    assert graph.add_edge("A", "B") == True
+    assert graph.add_edge("C", "D") == True
+    assert graph.add_edge("D", "E") == True
+    assert graph.add_edge("E", "A") == True
+    print("Depth-First Search:")
+    print(graph.dfs("A"))
     print("Adjacency List:")
     print(graph.get_adjacency_list())
     assert graph.remove_edge("A", "B") == True
