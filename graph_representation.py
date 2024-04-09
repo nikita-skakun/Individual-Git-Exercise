@@ -135,26 +135,39 @@ class Graph:
 
 # Example usage:
 if __name__ == "__main__":
+    # Initializing the graph
     graph = Graph()
     graph.add_vertex("A")
     graph.add_vertex("B")
     graph.add_vertex("C")
     graph.add_vertex("D")
     graph.add_vertex("E")
+    
+    # Adding edges in a circle
     assert graph.add_edge("B", "C") == True
     assert graph.add_edge("A", "B") == True
     assert graph.add_edge("C", "D") == True
     assert graph.add_edge("D", "E") == True
     assert graph.add_edge("E", "A") == True
+    
+    # Running the Depth-first Search
     print("Depth-First Search:")
     print(graph.dfs("A"))
+    
+    # Running the Breadth-first Search
     print("Breadth-First Search:")
     print(graph.bfs("A"))
+    
+    # Showing the Adjacency List 
     print("Adjacency List:")
     print(graph.get_adjacency_list())
+    
+    # Checking if the graph responds correctly to a removed edge
     assert graph.remove_edge("A", "B") == True
     print("Adjacency List after removing edge between A and B:")
     print(graph.get_adjacency_list())
+    
+    # Checking if the graph responds correctly to a removed vertex
     assert graph.remove_vertex("C") == True
     print("Adjacency List after removing vertex C:")
     print(graph.get_adjacency_list())
