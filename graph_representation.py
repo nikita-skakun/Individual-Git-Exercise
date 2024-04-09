@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class Graph:
     """
     A class representing a graph using an adjacency list.
@@ -105,6 +108,30 @@ class Graph:
         dfs_recursive(start_vertex)  # Start DFS traversal from the start vertex
         return visited
 
+    def bfs(self, start_vertex):
+        """
+        Performs breadth-first search (BFS) traversal starting from the specified vertex.
+
+        Args:
+            start_vertex (hashable): The starting vertex for BFS traversal.
+
+        Returns:
+            list: A list of visited vertices in the order they were visited.
+        """
+        visited = []  # List to keep track of visited vertices
+        queue = deque([start_vertex])  # Queue to store vertices for traversal
+
+        while queue:
+            vertex = queue.popleft()  # Dequeue a vertex from the queue
+            if vertex not in visited:
+                visited.append(vertex)  # Add the visited vertex to the list
+                # Enqueue neighboring vertices
+                for neighbour in self.adjacency_list[vertex]:
+                    if neighbour not in visited:
+                        queue.append(neighbour)
+
+        return visited
+
 
 # Example usage:
 if __name__ == "__main__":
@@ -121,6 +148,8 @@ if __name__ == "__main__":
     assert graph.add_edge("E", "A") == True
     print("Depth-First Search:")
     print(graph.dfs("A"))
+    print("Breadth-First Search:")
+    print(graph.bfs("A"))
     print("Adjacency List:")
     print(graph.get_adjacency_list())
     assert graph.remove_edge("A", "B") == True
